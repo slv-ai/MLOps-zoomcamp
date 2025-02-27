@@ -1,0 +1,11 @@
+# Ignore Anaconda/Miniconda environments
+.env/
+.conda/
+conda-meta/
+Anaconda3-2022.05-Linux-x86_64.sh
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore Anaconda virtual environment
+*.conda
