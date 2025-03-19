@@ -73,7 +73,7 @@ However, it might be necessary to hook-up a backend for several reasons.
     ```
     mlflow server --backend-store-uri sqlite:///mlflow.db
 
-    the terminal should output a port that it is listening at. Copy and paste the port address (127.0.0.1:5000)into your browser and you should see the MLflow frontend.
+    # the terminal should output a port that it is listening at. Copy and paste the port address (127.0.0.1:5000)into your browser and you should see the MLflow frontend.
 
 ### Storing Artifacts
     ```
@@ -147,12 +147,12 @@ The first version will usually get tested and then further changes will need to 
     ```
     mlflow.log_artifact(local_path = "path/to/model.bin", artifact_path = "folder/for/models/)
 
-When you go back to the MLflow UI and click on the run. in the artifacts section you should see a folder containing the model
+  When you go back to the MLflow UI and click on the run. in the artifacts section you should see a folder containing the model
     2.MLflow log_model()
         ```
         mlflow.xgboost.log_model(booster, artifact_path=./path/to/artifact/)
+        mlflow.sklearn.log_model()
 
-         mlflow.sklearn.log_model()
     2.4 Making predictions with the model.
          ```
          xgb_model = mlflow.xgboost.load_model(model_URI)
