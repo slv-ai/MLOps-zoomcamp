@@ -44,17 +44,6 @@ NB There are some extra things you might need in the backend e.g. PostgresSQL.
 ## 2.2 Getting started with MLflow
 This will be a brief description on how to use MLflow for an example problem
 
-### 2.2.1. Create a requirements.txt 
-In this case we will need
-```
-python==3.9
-mlflow
-jupyter
-sckit-learn
-panadas
-seaborn
-hyperopt
-xgboost
 1. Create the venv
     ```
     $conda create -n environment_name
