@@ -89,8 +89,8 @@ In this case the artifacts will be stored locally in a folder in the current wor
 
     mlflow.set_tracking_uri("sqlite:///mlflow.db") #The name of the database to use
     mlflow.set_experiment("new_experiment") #If already exists mlflow will append to existing data. Else it will make a new experiment
-3.To track with mlflow
-    ith mlflow.start_run():
+3.To track with mlflow:
+    with mlflow.start_run():
         #MLflow tags
         mlflow.set_tag("developer","Marcus")
         mlflow.log_param("train-data-path",train_path)
@@ -142,10 +142,10 @@ search_space = {
 ## 2.4 Model Management (Saving and Loading Models with MLflow)
 The first version will usually get tested and then further changes will need to be made to improve it. In some cases we may even need to revert back to previous forms of the model.
     1.  MLflow log_artifact
- mlflow.log_artifact(local_path = "path/to/model.bin", artifact_path = "folder/for/models/)
+    mlflow.log_artifact(local_path = "path/to/model.bin", artifact_path = "folder/for/models/)
 
 When you go back to the MLflow UI and click on the run. in the artifacts section you should see a folder containing the model
-    2.3 MLflow log_model()
+    2.MLflow log_model()
         mlflow.xgboost.log_model(booster, artifact_path=./path/to/artifact/)
 
          mlflow.sklearn.log_model()
