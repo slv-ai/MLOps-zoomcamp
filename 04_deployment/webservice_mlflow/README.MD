@@ -2,10 +2,11 @@
 
 STEPS:
 1.Install aws CLI:
-
-  `
-  curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-  sudo installer -pkg AWSCLIV2.pkg -target /
+  ``` 
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+```
+ 
 
 2.aws configure
    1). Check configure list if the credential is already set, `aws configure list`
