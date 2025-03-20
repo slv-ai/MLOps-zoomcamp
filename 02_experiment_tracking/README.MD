@@ -44,17 +44,6 @@ NB There are some extra things you might need in the backend e.g. PostgresSQL.
 ## 2.2 Getting started with MLflow
 This will be a brief description on how to use MLflow for an example problem
 
-### 2.2.1. Create a requirements.txt 
-In this case we will need
-```
-python==3.9
-mlflow
-jupyter
-sckit-learn
-panadas
-seaborn
-hyperopt
-xgboost
 1. Create the venv
     ```
     $conda create -n environment_name
@@ -81,13 +70,13 @@ However, it might be necessary to hook-up a backend for several reasons.
 
 ##### Creating a SQLite DB Backend
     Where the `--backend-store-uri` is the unique resoure identifier for your database. For example to create a local SQLite database:
-
+    ```
     mlflow server --backend-store-uri sqlite:///mlflow.db
 
-    the terminal should output a port that it is listening at. Copy and paste the port address (127.0.0.1:5000)into your browser and you should see the MLflow frontend.
+    # the terminal should output a port that it is listening at. Copy and paste the port address (127.0.0.1:5000)into your browser and you should see the MLflow frontend.
 
 ### Storing Artifacts
-    
+    ```
     $mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts
 
 In this case the artifacts will be stored locally in a folder in the current working directory called `artifacts`. However there is also support to upload these artifacts to S3 buckets, GoogleCloud, and Azure Blobs. You can reac more on this in the [artifact documentation](https://mlflow.org/docs/latest/tracking/artifacts-stores.html) page.
@@ -100,8 +89,9 @@ In this case the artifacts will be stored locally in a folder in the current wor
 
     mlflow.set_tracking_uri("sqlite:///mlflow.db") #The name of the database to use
     mlflow.set_experiment("new_experiment") #If already exists mlflow will append to existing data. Else it will make a new experiment
-3.To track with mlflow
-    ith mlflow.start_run():
+3.To track with mlflow:
+   ```
+    with mlflow.start_run():
         #MLflow tags
         mlflow.set_tag("developer","Marcus")
         mlflow.log_param("train-data-path",train_path)
@@ -129,6 +119,7 @@ In this case the artifacts will be stored locally in a folder in the current wor
 3.xgboost - Hyperparameter optimization with mlflow and select the best model
 ** HyperOpt:
 Hyperopt has been designed to accommodate Bayesian optimization algorithms based on Gaussian processes and regression trees.
+    ```
     from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
     
     from hyperopt.pyll import scope
@@ -139,7 +130,7 @@ Hyperopt has been designed to accommodate Bayesian optimization algorithms based
 `Trials`: To keep track of information for each run
 * `pyll.scope`: used to define the range
 
-
+```
 search_space = {
         'max_depth': scope.int(hp.quniform('max_depth', 1, 20, 1)),
         'n_estimators': scope.int(hp.quniform('n_estimators', 10, 100, 1)),
@@ -153,13 +144,16 @@ search_space = {
 ## 2.4 Model Management (Saving and Loading Models with MLflow)
 The first version will usually get tested and then further changes will need to be made to improve it. In some cases we may even need to revert back to previous forms of the model.
     1.  MLflow log_artifact
- mlflow.log_artifact(local_path = "path/to/model.bin", artifact_path = "folder/for/models/)
+    ```
+    mlflow.log_artifact(local_path = "path/to/model.bin", artifact_path = "folder/for/models/)
 
-When you go back to the MLflow UI and click on the run. in the artifacts section you should see a folder containing the model
-    2.3 MLflow log_model()
+  When you go back to the MLflow UI and click on the run. in the artifacts section you should see a folder containing the model
+    2.MLflow log_model()
+        ```
         mlflow.xgboost.log_model(booster, artifact_path=./path/to/artifact/)
+        mlflow.sklearn.log_model()
 
-         mlflow.sklearn.log_model()
     2.4 Making predictions with the model.
+         ```
          xgb_model = mlflow.xgboost.load_model(model_URI)
 
