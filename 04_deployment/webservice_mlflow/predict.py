@@ -3,10 +3,11 @@ import pickle
 import mlflow
 from flask import Flask,request,jsonify
 
-RUN_ID=os.getenv('RUN_ID')
+RUN_ID=os.getenv('da8ff84b1e2e43e4912e184470d7aec2')
 
 logged_model=f's3://mlflow-models-slv/1/{RUN_ID}/artifacts/model'
 #logged_model=f'runs:/{RUN_ID}/model'
+model=mlflow.pyfunc.load_model(logged_model)
 
 def prepare_features(ride):
     features={}

@@ -14,7 +14,7 @@
     freeze: show all the libraries that we currently have installed
 4.Install the required version of scikit-learn (optional), flask and the python version that matches it.
 
-    pipenv install scikit-learn==1.2.2 flask --python=3.10 -> generate pipfile and `pipfile.lock
+    pipenv install scikit-learn==1.6.0 flask --python=3.12  gunicorn -> generate pipfile and `pipfile.lock
 
 5.Activate the virtual environment
 
