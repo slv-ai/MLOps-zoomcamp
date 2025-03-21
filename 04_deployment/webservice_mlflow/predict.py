@@ -3,7 +3,7 @@ import pickle
 import mlflow
 from flask import Flask,request,jsonify
 
-RUN_ID=os.getenv('da8ff84b1e2e43e4912e184470d7aec2')
+RUN_ID='51ac55521a414c17869dc2eccb873ee2'
 
 logged_model=f's3://mlflow-models-slv/1/{RUN_ID}/artifacts/model'
 #logged_model=f'runs:/{RUN_ID}/model'
