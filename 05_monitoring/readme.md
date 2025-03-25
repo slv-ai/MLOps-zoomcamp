@@ -60,3 +60,9 @@ Online (non-batch) Monitoring:
 - Calculate Metrics based on logs
 - Load Metrics into a Database: save the calculated metrics into a PostgreSQL database.
 - Build a Dashboard: Use Grafana to build a dashboard with the data from PostgreSQL database.
+
+
+ try using curl to access Adminer  and grafana from within the container:
+    ```
+    curl http://localhost:8080
+    curl http://localhost:3000
