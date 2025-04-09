@@ -3,7 +3,10 @@ import pickle
 import mlflow
 from flask import Flask,request,jsonify
 
-RUN_ID='51ac55521a414c17869dc2eccb873ee2'
+os.environ['AWS_PROFILE'] = 'ml_user'
+
+
+RUN_ID='0b524fa448444456aa0ead18def76fcd'
 
 logged_model=f's3://mlflow-models-slv/1/{RUN_ID}/artifacts/model'
 #logged_model=f'runs:/{RUN_ID}/model'
