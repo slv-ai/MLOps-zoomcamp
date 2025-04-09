@@ -6,7 +6,7 @@ from flask import Flask,request,jsonify
 os.environ['AWS_PROFILE'] = 'ml_user'
 
 
-RUN_ID='0b524fa448444456aa0ead18def76fcd'
+RUN_ID='6bf96782bee64c8cadefd3497b0712a1'
 
 logged_model=f's3://mlflow-models-slv/1/{RUN_ID}/artifacts/model'
 #logged_model=f'runs:/{RUN_ID}/model'

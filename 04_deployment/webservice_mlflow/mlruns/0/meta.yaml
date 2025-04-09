@@ -1,6 +1,6 @@
 artifact_location: file:///home/ubuntu/MLOps-zoomcamp/04_deployment/webservice_mlflow/mlruns/0
-creation_time: 1744163556957
+creation_time: 1744217690973
 experiment_id: '0'
-last_update_time: 1744163556957
+last_update_time: 1744217690973
 lifecycle_stage: active
 name: Default
