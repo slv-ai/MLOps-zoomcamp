@@ -1,4 +1,5 @@
 # for test event  lambda
+```
 {
   "ride":{
     "PULocationID": 130,
@@ -7,15 +8,18 @@
   },
   "ride_id":123
 }
-
+```
 ### for test kinesis- sending data
 #### 1 is ride id
+`````
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
     --stream-name ${KINESIS_STREAM_INPUT} \
     --partition-key 1 \
     --data "Hello,this is a test"
+`````
 ### another
+````
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
     --stream-name ${KINESIS_STREAM_INPUT} \
@@ -28,7 +32,9 @@ aws kinesis put-record \
         },
         "ride_id":123
     }'
+`````
 ### lambda consumes event from kinesis
+````
 {
     "Records": [
         {
@@ -49,8 +55,10 @@ aws kinesis put-record \
         }
     ]
 }
+```````
 
 ## lambda.py
+``````
 import json
 import base64
 
