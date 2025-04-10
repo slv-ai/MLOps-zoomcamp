@@ -65,13 +65,13 @@ aws kinesis put-record \
             "kinesis": {
                 "kinesisSchemaVersion": "1.0",
                 "partitionKey": "1",
-                "sequenceNumber": "49662158939160075321139380318665387679404903313354784770",
+                "sequenceNumber": "49662250773985614793419391233323513470228380249627820034",
                 "data": "Hellothisisatest",
-                "approximateArrivalTimestamp": 1744061117.033
+                "approximateArrivalTimestamp": 1744319536.253
             },
             "eventSource": "aws:kinesis",
             "eventVersion": "1.0",
-            "eventID": "shardId-000000000000:49662158939160075321139380318665387679404903313354784770",
+            "eventID": "shardId-000000000000:49662250773985614793419391233323513470228380249627820034",
             "eventName": "aws:kinesis:record",
             "invokeIdentityArn": "arn:aws:iam::585768144809:role/lambda-kinesis-role",
             "awsRegion": "us-east-1",
@@ -79,6 +79,8 @@ aws kinesis put-record \
         }
     ]
 }
+
+
 ```````
 
 ## lambda.py
