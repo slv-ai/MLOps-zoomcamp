@@ -32,18 +32,18 @@ def lambda_handler(event, context):
 }
 ```
 ### aws kinesis-
-2.create a kinesis stream
-
+2.create a kinesis stream for test
+(ride_events-stream name)
 (1-ride id)
-`````
+`````bash
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
     --stream-name ${KINESIS_STREAM_INPUT} \
     --partition-key 1 \
     --data "Hello,this is a test"
 `````
-### another
-````
+
+````bash
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
     --stream-name ${KINESIS_STREAM_INPUT} \
