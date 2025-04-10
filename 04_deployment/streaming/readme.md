@@ -85,14 +85,14 @@ def lambda_handler(event, context):
     for record in event['Records']:
         encoded_data=record['kinesis']['data']
         decoded_data=base64.b64decode(encoded_data).decode('utf-8')
-        print(decoded_data)
+        ride_event=json.loads(decoded_data)
+        print(ride_event)
     prediction=10.0
     ride_id=123
     return {
         'ride_duration': prediction,
         'ride_id': ride_id
     }
-
 ``````
 3.now change the data for kinesis stream to test
 ````bash
