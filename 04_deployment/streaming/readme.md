@@ -67,6 +67,7 @@ aws kinesis put-record \
 ```````
 ````
 import json
+import base64
 
 def prepare_features(ride):
     features = {}
@@ -83,28 +84,33 @@ def lambda_handler(event, context):
     print(json.dumps(event))
     for record in event['Records']:
         encoded_data=record['kinesis']['data']
-        print(encoded_data)
+        decoded_data=base64.b64decode(encoded_data).decode('utf-8')
+        print(decoded_data)
     prediction=10.0
     ride_id=123
     return {
         'ride_duration': prediction,
         'ride_id': ride_id
     }
-```
+
+``````
 3.now change the data for kinesis stream to test
 ````bash
 KINESIS_STREAM_INPUT=ride_events
+
+# Send the JSON payload, base64-encoded
 aws kinesis put-record \
-    --stream-name ${KINESIS_STREAM_INPUT} \
-    --partition-key 1 \
-    --data '{
-        "ride":{
-            "PULocationID": 130,
-            "DOLocationID": 205,
-            "trip_distance": 3.66
-        },
-        "ride_id":123
-    }'
+  --stream-name "$KINESIS_STREAM_INPUT" \
+  --partition-key 1 \
+  --data "$(echo -n '{
+    "ride": {
+      "PULocationID": 130,
+      "DOLocationID": 205,
+      "trip_distance": 3.66
+    },
+    "ride_id": 123
+  }' | base64)"
+
 `````
 
 ## lambda.py
