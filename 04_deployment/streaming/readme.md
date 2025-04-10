@@ -65,7 +65,7 @@ aws kinesis put-record \
 }
 
 ```````
-````code-lambda
+````
 import json
 
 def prepare_features(ride):
