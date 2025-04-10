@@ -1,5 +1,5 @@
 # aws lambda 
-1.create a simple lambda funtion with a test event to test
+### 1.create a simple lambda funtion with a test event to test
 ```
 import json
 
@@ -65,6 +65,7 @@ aws kinesis put-record \
 }
 
 ```````
+### 2.now change the data for kinesis stream to test
 ````
 import json
 import base64
@@ -94,7 +95,7 @@ def lambda_handler(event, context):
         'ride_id': ride_id
     }
 ``````
-3.now change the data for kinesis stream to test
+
 ````bash
 KINESIS_STREAM_INPUT=ride_events
 
