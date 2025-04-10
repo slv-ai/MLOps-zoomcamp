@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 }
 ```
 ### aws kinesis-
-2.create a kinesis stream for test
+2.create a simple kinesis stream for test
 (ride_events-stream name)
 (1-ride id)
 `````bash
@@ -42,22 +42,6 @@ aws kinesis put-record \
     --partition-key 1 \
     --data "Hello,this is a test"
 `````
-
-````bash
-KINESIS_STREAM_INPUT=ride_events
-aws kinesis put-record \
-    --stream-name ${KINESIS_STREAM_INPUT} \
-    --partition-key 1 \
-    --data '{
-        "ride":{
-            "PULocationID": 130,
-            "DOLocationID": 205,
-            "trip_distance": 3.66
-        },
-        "ride_id":123
-    }'
-`````
-### lambda consumes event from kinesis
 ````
 {
     "Records": [
@@ -80,8 +64,48 @@ aws kinesis put-record \
     ]
 }
 
-
 ```````
+````code-lambda
+import json
+
+def prepare_features(ride):
+    features = {}
+    features['PU_DO'] = '%s_%s' % (ride['PULocationID'], ride['DOLocationID'])
+    features['trip_distance'] = ride['trip_distance']
+    return features
+def predict(features):
+    return 10.0
+def lambda_handler(event, context):
+    #ride=event['ride']
+    #ride_id=event['ride_id']
+    #features=prepare_features(ride)
+    #prediction=predict(features)
+    print(json.dumps(event))
+    for record in event['Records']:
+        encoded_data=record['kinesis']['data']
+        print(encoded_data)
+    prediction=10.0
+    ride_id=123
+    return {
+        'ride_duration': prediction,
+        'ride_id': ride_id
+    }
+```
+
+````bash
+KINESIS_STREAM_INPUT=ride_events
+aws kinesis put-record \
+    --stream-name ${KINESIS_STREAM_INPUT} \
+    --partition-key 1 \
+    --data '{
+        "ride":{
+            "PULocationID": 130,
+            "DOLocationID": 205,
+            "trip_distance": 3.66
+        },
+        "ride_id":123
+    }'
+`````
 
 ## lambda.py
 ``````
