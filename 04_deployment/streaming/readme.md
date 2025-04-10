@@ -19,6 +19,7 @@ def lambda_handler(event, context):
         'ride_duration': prediction,
         'ride_id': ride_id
     }
+````
 
 ```
 {
