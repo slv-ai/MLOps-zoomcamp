@@ -91,7 +91,7 @@ def lambda_handler(event, context):
         'ride_id': ride_id
     }
 ```
-
+3.now change the data for kinesis stream to test
 ````bash
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
