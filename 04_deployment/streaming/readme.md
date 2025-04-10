@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 }
 ```
 ### aws kinesis-
-2.create a simple kinesis stream for test
+create a simple kinesis stream for test
 (ride_events-stream name)
 (1-ride id)
 `````bash
@@ -113,7 +113,7 @@ aws kinesis put-record \
   }' | base64)"
 
 `````
-
+### 3.create another data stream
 ## lambda.py
 ``````
 import json
