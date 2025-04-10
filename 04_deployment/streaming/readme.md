@@ -1,4 +1,25 @@
-# for test event  lambda
+# aws lambda 
+1.create a simple lambda funtion with a test event to test
+```
+import json
+
+def prepare_features(ride):
+    features = {}
+    features['PU_DO'] = '%s_%s' % (ride['PULocationID'], ride['DOLocationID'])
+    features['trip_distance'] = ride['trip_distance']
+    return features
+def predict(features):
+    return 10.0
+def lambda_handler(event, context):
+    ride=event['ride']
+    ride_id=event['ride_id']
+    features=prepare_features(ride)
+    prediction=predict(features)
+    return {
+        'ride_duration': prediction,
+        'ride_id': ride_id
+    }
+
 ```
 {
   "ride":{
