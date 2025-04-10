@@ -31,8 +31,9 @@ def lambda_handler(event, context):
   "ride_id":123
 }
 ```
-### for test kinesis- sending data
-#### 1 is ride id
+### aws kinesis- sending data
+2.create a kinesis stream
+1 - ride id
 `````
 KINESIS_STREAM_INPUT=ride_events
 aws kinesis put-record \
