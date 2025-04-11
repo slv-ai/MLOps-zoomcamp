@@ -175,8 +175,9 @@ def lambda_handler(event, context):
     }
 `````
 
-
 reading from the stream
+
+
 ````
 KINESIS_STREAM_OUTPUT='ride_predictions'
 SHARD='shardId-000000000000'
