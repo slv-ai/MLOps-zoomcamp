@@ -201,3 +201,122 @@ echo ${RESULT} | jq -r '.Records[0].Data' | base64 --decode
 echo $SHARD_ITERATOR
 echo $RESULT
 ````
+
+
+### 4.load model to lambda
+edit lambda_function.py and run
+export PREDICTIONS_STREAM_NAME="ride_predictions"
+export RUN_ID="6bf96782bee64c8cadefd3497b0712a1"
+export TEST_RUN="True"
+
+python test.py
+
+(create a new conda env and install pip install numpy==2.0.2 pandas==2.2.3 scikit-learn==1.6.1 scipy==1.13.1 psutil==5.9.0 boto3 mlflow)run python test.py
+
+## 5.create a docker file
+```
+pipenv install boto3 mlflow scikit-learn==1.6.1 --python=3.9
+```
+#use python 3.9 image from aws ecr,Use the standard AWS Lambda Invoke path for the emulator:url = 'http://localhost:8080/2015-03-31/functions/function/invocations'
+
+
+```
+docker build -t stream-model-duration:v1 .
+
+````
+```
+export AWS_ACCESS_KEY_ID=YOUR_KEY_ID 
+export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
+export AWS_DEFAULT_REGION=YOUR_REGION
+```
+```
+docker run -it --rm \
+-p 8080:8080 \
+-e PREDICTIONS_STREAM_NAME="ride_predictions" \
+-e RUN_ID="6bf96782bee64c8cadefd3497b0712a1" \
+-e TEST_RUN="True" \
+-e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+-e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+-e AWS_DEFAULT_REGION="us-east-1" \
+stream-model-duration:v1
+
+````
+and run python test_docker.py
+
+
+### 6.push image to AWS-ECR
+
+1.Create a new AWS repo -copy repository uri and paste in REMOTE URI
+```
+aws ecr create-repository --repository-name duration-model
+
+
+```
+2.Login to ECR
+```
+aws ecr get-login-password --region <your-region> --profile ml_user | \
+docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.<your-region>.amazonaws.com
+
+```
+3.Push the docker image to ECR.
+````
+REMOTE_URI="<paste repository uri here>"
+REMOTE_TAG="v1"
+REMOTE_IMAGE=${REMOTE_URI}:${REMOTE_TAG}
+
+LOCAL_IMAGE="stream-model-duration:v1"
+docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}
+docker push ${REMOTE_IMAGE}
+
+```
+4.Sucessfully uploaded. And check the image
+```
+ echo $REMOTE_IMAGE
+ ```
+
+### 7.model from docker image
+1.Create a new Lambda function, which is from the container image , the container name is ride-duration-predition, and Container image URI is REMOTE_URI
+2.Then go to Lambda > Configuration > Environment variables, create Key - value for PREDICTIONS_STREAM_NAME and RUN_ID
+
+Add Kinesis stream created before as trigger for new lambda function. Also delete the previous Lambda function which also used this Kinesis stream.
+
+Creat policy to IAM-rule for s3.
+3.test:
+run a test event on lambda 
+
+or
+send a new record to trigger kinesis stream:
+````
+KINESIS_STREAM_INPUT=ride-events \ 
+aws kinesis put-record \
+    --stream-name ${KINESIS_STREAM_INPUT} \
+    --partition-key 1 \
+   --cli-binary-format raw-in-base64-out \
+    --data '{
+        "ride": {
+            "PULocationID": 130,
+            "DOLocationID": 205,
+            "trip_distance": 3.66
+        }, 
+        "ride_id": 156
+    }'
+````
+Ask for the output stream.
+````
+KINESIS_STREAM_OUTPUT='ride_predictions'
+SHARD='shardId-000000000000'
+
+SHARD_ITERATOR=$(aws kinesis \
+    get-shard-iterator \
+        --shard-id ${SHARD} \
+        --shard-iterator-type TRIM_HORIZON \
+        --stream-name ${KINESIS_STREAM_OUTPUT} \
+        --query 'ShardIterator' \
+)
+
+RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
+echo ${RESULT} | jq -r '.Records[0].Data' | base64 --decode
+````
+result:{"model": "ride_duration_prediction_model", "version": "123", "prediction": {"ride_duration": 10.0, "ride_id": 123}}(base) ubuntu@ip-172-31-38-225:~$
+
+refer:https://github.com/Muhongfan/MLops/blob/main/04-deployment/streaming/README.md

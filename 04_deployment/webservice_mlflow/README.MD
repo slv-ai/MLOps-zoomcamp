@@ -36,7 +36,7 @@ sudo lsof -i :5000
 `````
  6. generate pipfile and `pipfile.lock:
 `````
- pipenv install scikit-learn==1.0.2 flask --python=3.9  gunicorn mlflow boto3
+ pipenv install scikit-learn==1.6.1 flask --python=3.9  gunicorn mlflow boto3
 ``````
 7.Activate the virtual environment
 ````
