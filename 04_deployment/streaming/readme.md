@@ -31,7 +31,9 @@ def lambda_handler(event, context):
   "ride_id":123
 }
 ```
+
 ### aws kinesis-
+
 create a simple kinesis stream for test
 (ride_events-stream name)
 (1-ride id)
