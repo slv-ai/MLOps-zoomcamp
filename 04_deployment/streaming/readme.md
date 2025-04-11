@@ -173,7 +173,7 @@ def lambda_handler(event, context):
         'prediction': predictions_events
 
     }
-    `````
+`````
 
 ### reading from the stream
 
