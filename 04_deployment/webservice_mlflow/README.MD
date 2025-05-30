@@ -8,7 +8,7 @@ STEPS:
   sudo ./aws/install
   aws --version
 ````
-2.aws configure --profile
+2.aws configure --profile my_profile_name
 `````
   AWS Access Key ID [None]:
   AWS Secret Access Key [None]: 
