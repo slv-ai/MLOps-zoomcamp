@@ -205,12 +205,13 @@ echo $RESULT
 
 ### 4.load model to lambda
 edit lambda_function.py and run
+```
 export PREDICTIONS_STREAM_NAME="ride_predictions"
 export RUN_ID="6bf96782bee64c8cadefd3497b0712a1"
 export TEST_RUN="True"
 
 python test.py
-
+```
 (create a new conda env and install pip install numpy==2.0.2 pandas==2.2.3 scikit-learn==1.6.1 scipy==1.13.1 psutil==5.9.0 boto3 mlflow)run python test.py
 
 ## 5.create a docker file
