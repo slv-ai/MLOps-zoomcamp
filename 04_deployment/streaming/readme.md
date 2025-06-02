@@ -247,12 +247,14 @@ and run python test_docker.py
 ### 6.push image to AWS-ECR
 
 1.Create a new AWS repo -copy repository uri and paste in REMOTE URI
+
 ```
 aws ecr create-repository --repository-name duration-model
 
 
 ```
 2.Login to ECR
+
 ```
 aws ecr get-login-password --region <your-region> --profile ml_user | \
 docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.<your-region>.amazonaws.com
@@ -268,11 +270,11 @@ LOCAL_IMAGE="stream-model-duration:v1"
 docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}
 docker push ${REMOTE_IMAGE}
 
-```
+````
 4.Sucessfully uploaded. And check the image
 ```
  echo $REMOTE_IMAGE
- ```
+```
 
 ### 7.model from docker image
 1.Create a new Lambda function, which is from the container image , the container name is ride-duration-predition, and Container image URI is REMOTE_URI
